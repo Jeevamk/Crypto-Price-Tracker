@@ -5,8 +5,9 @@ import axios from 'axios'
 //signup
 export const signup = createAsyncThunk('auth/signup', async (userDetails, rejectWithValue) => {
     try {
-        const reponse = await axios.post('/api/signup', userDetails)
+        const reponse = await axios.post('http://localhost:5001/api/user/register', userDetails)
         return reponse.data;
+        
 
     } catch (error) {
         if (error.reponse && error.reponse.data) {

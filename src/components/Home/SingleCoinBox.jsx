@@ -1,7 +1,6 @@
 import React from 'react'
 
 function SingleCoinBox({coin}) {
-    console.log(coin);
   return (
     <>
     <div className="flex items-center text-white">
