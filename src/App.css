@@ -23,12 +23,11 @@ body{
   .break {
     padding: 8px 16px;
     margin: 0 4px;
-    /* border: 1px solid #ddd; */
     cursor: pointer;
   }
   
   .active {
-    background-color: #007bff;
+    background-color: rgb(39, 38, 38);
     color: white;
   }
   
