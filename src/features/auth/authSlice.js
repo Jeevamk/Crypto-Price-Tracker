@@ -39,6 +39,7 @@ const authSlice = createSlice({
     name :'auth',
     initialState :{
         user : null,
+        token:null,
         status: 'idle',
         error:null
     
@@ -46,6 +47,9 @@ const authSlice = createSlice({
     reducers: {
         logout : (state) => {
             state.user = null;
+            state.token=null;
+            state.status = null;
+            state.error=null;
         }
     },
 
