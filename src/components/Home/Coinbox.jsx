@@ -3,6 +3,8 @@ import { coins } from '../../constants/coins';
 import { DUMMY_IMAGE_URL } from '../../constants/dummyImages';
 import CoinCard from './CoinCard';
 import Pagination from './Pagination';
+import Shimmer from './Shimmer'
+
 
 const ITEMS_PER_PAGE = 15;
 
@@ -10,6 +12,7 @@ function Coinbox() {
   const [cryptoImagesList, setCryptoImagesList] = useState([]);
   const [coinsWithImagesAndPrices, setCoinsWithImagesAndPrices] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchCryptoData = async () => {
@@ -51,6 +54,7 @@ function Coinbox() {
         });
 
         setCoinsWithImagesAndPrices(coinsWithRealOrDummyImageAndPrice);
+        setIsLoading(false)
       } catch (error) {
         console.error('Error fetching USDT data:', error);
       }
@@ -72,14 +76,20 @@ function Coinbox() {
   return (
     <div>
       <div className='flex flex-wrap justify-center gap-3'>
-        {currentItems.map(coin => (
-          <CoinCard key={coin.symbol} coin={coin} />
-        ))}
+        {isLoading
+          ? Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
+              <Shimmer key={index} />
+            ))
+          : currentItems.map(coin => (
+              <CoinCard key={coin.symbol} coin={coin} />
+            ))}
       </div>
-      <Pagination
-        pageCount={Math.ceil(coinsWithImagesAndPrices.length / ITEMS_PER_PAGE)}
-        onPageChange={handlePageClick}
-      />
+      {!isLoading && (
+        <Pagination
+          pageCount={Math.ceil(coinsWithImagesAndPrices.length / ITEMS_PER_PAGE)}
+          onPageChange={handlePageClick}
+        />
+      )}
     </div>
   );
 }
