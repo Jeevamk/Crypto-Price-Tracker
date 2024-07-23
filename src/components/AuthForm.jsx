@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { login, signup } from '../features/auth/authSlice';
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const dispatch = useDispatch();
+  const { status, error } = useSelector((state) => state.auth);
 
-
-  //validation for login
   const loginValidationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Required'),
     password: Yup.string().required('Required'),
   });
 
-  //validation for signup
   const signupValidationSchema = Yup.object({
     username: Yup.string().required('Required'),
     email: Yup.string().email('Invalid email address').required('Required'),
-    password: Yup.string().required('Required')
-    .min(6,'Password must be at least 6 characters').
-    matches(/[A-Z]/,'Password must contain at least one uppercase letter')
-    .matches(/[0-9]/,'Password must contain at least one number'),
+    password: Yup.string()
+      .required('Required')
+      .min(6, 'Password must be at least 6 characters')
+      .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+      .matches(/[0-9]/, 'Password must contain at least one number'),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref('password'), null], 'Passwords must match')
       .required('Required'),
@@ -32,12 +34,13 @@ const AuthForm = () => {
     confirmPassword: '',
   };
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { setSubmitting }) => {
     if (isLogin) {
-      console.log('Logging in with', values);
+      dispatch(login(values));
     } else {
-      console.log('Signing up with', values);
+      dispatch(signup(values));
     }
+    setSubmitting(false);
   };
 
   return (
@@ -116,6 +119,8 @@ const AuthForm = () => {
               >
                 {isLogin ? 'Login' : 'Sign Up'}
               </button>
+              {status === 'loading' && <div className="text-white text-center mt-4">Loading...</div>}
+              {error && <div className="text-red-500 text-center mt-4">{error}</div>}
             </Form>
           )}
         </Formik>

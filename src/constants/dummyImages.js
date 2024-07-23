@@ -1,0 +1,1 @@
+export const DUMMY_IMAGE_URL = 'https://thumbs.dreamstime.com/b/stock-316114832.jpg';
