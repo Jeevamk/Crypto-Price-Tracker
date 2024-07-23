@@ -15,12 +15,12 @@ const Pagination = ({ pageCount, onPageChange }) => {
         pageRangeDisplayed={2}
         onPageChange={onPageChange}
         containerClassName="flex items-center space-x-2"
-        activeClassName="bg-gray-700 text-white"
-        disabledClassName="text-white cursor-not-allowed"
-        pageClassName="px-3 py-1 border border-gray-700 rounded-md cursor-pointer hover:bg-gray-600 "
-        previousClassName="px-3 py-1 border border-gray-700 rounded-md cursor-pointer hover:bg-gray-600"
-        nextClassName="px-3 py-1 border border-gray-700 rounded-md cursor-pointer hover:bg-gray-600"
-        breakClassName="px-3 py-1 border border-gray-700 rounded-md cursor-pointer"
+        activeClassName="bg-blue-500 text-white rounded-md"
+        disabledClassName="text-gray-400 cursor-not-allowed"
+        pageClassName="px-3 py-1 text-white cursor-pointer hover:bg-gray-700 rounded-md transition-colors"
+        previousClassName="px-3 py-1 text-white cursor-pointer hover:bg-gray-700 rounded-md transition-colors"
+        nextClassName="px-3 py-1 text-white cursor-pointer hover:bg-gray-700 rounded-md transition-colors"
+        breakClassName="px-3 py-1 text-white cursor-pointer"
         breakLinkClassName="text-gray-500"
       />
     </div>
