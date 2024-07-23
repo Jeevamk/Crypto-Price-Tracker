@@ -34,11 +34,11 @@ const SearchBox = () => {
 
   return (
     <div className="flex flex-col items-center mb-6 mt-7">
-      <form onSubmit={handleSubmit} className="flex items-center w-full max-w-4xl bg-gray-950 p-4 rounded-full">
+      <form onSubmit={handleSubmit} className="flex items-center w-full max-w-4xl bg-gray-800 p-4 rounded-full">
         <BiSearch className="text-gray-400" size="1.3rem" />
         <input
           type="text" 
-          className="bg-gray-950 text-white ml-4 w-full focus:outline-none"
+          className="bg-gray-800 text-white ml-4 w-full focus:outline-none"
           placeholder="Search"
           value={query}
           onChange={handleChange}
