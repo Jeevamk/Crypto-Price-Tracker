@@ -8,3 +8,32 @@
 body{
     background-color: rgba(0, 0, 0, 0.944);
 }
+
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    color: white;
+  }
+  
+  .page,
+  .previous,
+  .next,
+  .break {
+    padding: 8px 16px;
+    margin: 0 4px;
+    /* border: 1px solid #ddd; */
+    cursor: pointer;
+  }
+  
+  .active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .disabled {
+    pointer-events: none;
+    color: #ddd;
+  }
+  
