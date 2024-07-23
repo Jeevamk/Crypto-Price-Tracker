@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { BiSolidUserCircle } from "react-icons/bi";
+import { logout } from '../../../features/auth/authSlice';
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [user] = useState({ name: 'John Doe' });
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user); 
+
+  const handleLogout = () => {
+    dispatch(logout()); 
+    setShowMenu(false); 
+  };
 
   return (
     <nav className="bg-black shadow-md sticky top-0 z-10">
@@ -11,8 +19,7 @@ const Navbar = () => {
         <div className="relative flex items-center justify-between h-16">
           <div className="flex-1 flex items-center justify-between">
             <div className="flex-shrink-0 text-white">
-        
-            <h1 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-semibold sm:font-bold">
+              <h1 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-semibold sm:font-bold">
                 CryptoTracker.
               </h1>
             </div>
@@ -21,12 +28,10 @@ const Navbar = () => {
                 onClick={() => setShowMenu(!showMenu)}
                 className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-white"
                 id="user-menu-button"
-                aria-expanded="false"
+                aria-expanded={showMenu}
                 aria-haspopup="true"
               >
-                {/* <span className="sr-only">Open user menu</span> */}
                 <BiSolidUserCircle className="h-8 w-8 md:h-10 md:w-10 lg:h-10 lg:w-10 rounded-full bg-white" />
-                
               </button>
               {showMenu && (
                 <div
@@ -36,20 +41,29 @@ const Navbar = () => {
                   aria-labelledby="user-menu-button"
                   tabIndex="-1"
                 >
-                  <div
-                    className="block px-4 py-2 text-sm text-white"
-                    role="menuitem"
-                    tabIndex="-1"
-                  >
-                    {user.name}
-                  </div>
-                  <div
-                    className="block px-4 py-2 text-sm text-gray-600"
-                    role="menuitem"
-                    tabIndex="-1"
-                  >
-                    Logout
-                  </div>
+                  {user ? (
+                    <>
+                      <div
+                        className="block px-4 py-2 text-sm text-white"
+                        role="menuitem"
+                        tabIndex="-1"
+                      >
+                        {user.name}
+                      </div>
+                      <div
+                        className="block px-4 py-2 text-sm text-gray-600 cursor-pointer hover:text-white"
+                        role="menuitem"
+                        tabIndex="-1"
+                        onClick={handleLogout}
+                      >
+                        Logout
+                      </div>
+                    </>
+                  ) : (
+                    <div className="block px-4 py-2 text-sm text-gray-600">
+                      No user logged in
+                    </div>
+                  )}
                 </div>
               )}
             </div>
