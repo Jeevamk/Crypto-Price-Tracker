@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 
-const Search = () => {
+const SearchBox = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
@@ -33,18 +33,18 @@ const Search = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mb-6">
-      <form onSubmit={handleSubmit} className="flex items-center w-4/5 md:w-1/2 bg-gray-800 p-3 rounded-full">
-        <BiSearch className="text-gray-400" size="1.2rem" />
+    <div className="flex flex-col items-center mb-6 mt-7">
+      <form onSubmit={handleSubmit} className="flex items-center w-full max-w-4xl bg-gray-950 p-4 rounded-full">
+        <BiSearch className="text-gray-400" size="1.3rem" />
         <input
-          type="text"
-          className="bg-gray-800 text-gray-400 ml-4 w-full focus:outline-none"
+          type="text" 
+          className="bg-gray-950 text-white ml-4 w-full focus:outline-none"
           placeholder="Search"
           value={query}
           onChange={handleChange}
         />
       </form>
-      <div className="mt-4 w-4/5 md:w-1/2 bg-white rounded-lg shadow-lg">
+      {/* <div className="mt-4 w-full max-w-3xl bg-white rounded-lg shadow-lg">
         {results.length > 0 ? (
           results.map(result => (
             <div key={result.id} className="p-3 border-b border-gray-300 last:border-none">
@@ -54,9 +54,9 @@ const Search = () => {
         ) : (
           <div className="p-3 text-gray-500">No results found</div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default Search;
+export default SearchBox;

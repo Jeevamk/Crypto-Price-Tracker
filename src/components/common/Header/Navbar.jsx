@@ -19,7 +19,7 @@ const Navbar = () => {
             <div className="ml-3 relative">
               <button
                 onClick={() => setShowMenu(!showMenu)}
-                className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-white"
                 id="user-menu-button"
                 aria-expanded="false"
                 aria-haspopup="true"
@@ -30,7 +30,7 @@ const Navbar = () => {
               </button>
               {showMenu && (
                 <div
-                  className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1  ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-2xl py-1 bg-black"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="user-menu-button"
@@ -44,7 +44,7 @@ const Navbar = () => {
                     {user.name}
                   </div>
                   <div
-                    className="block px-4 py-2 text-sm text-gray-700"
+                    className="block px-4 py-2 text-sm text-gray-600"
                     role="menuitem"
                     tabIndex="-1"
                   >
