@@ -7,6 +7,7 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user); 
+  console.log(user);
 
   const handleLogout = () => {
     dispatch(logout()); 
@@ -48,7 +49,7 @@ const Navbar = () => {
                         role="menuitem"
                         tabIndex="-1"
                       >
-                        {user.name}
+                        {user.username}
                       </div>
                       <div
                         className="block px-4 py-2 text-sm text-gray-600 cursor-pointer hover:text-white"

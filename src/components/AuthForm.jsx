@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { login, signup } from '../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { signup, login } from '../features/auth/authSlice';
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { status, error } = useSelector((state) => state.auth);
 
   const loginValidationSchema = Yup.object({
@@ -35,24 +37,25 @@ const AuthForm = () => {
   };
 
   const handleSubmit = (values, { setSubmitting }) => {
-    console.log('Form Values:', values);
     if (isLogin) {
-      dispatch(login(values));
+      dispatch(login(values)).then((result) => {
+        if (result.type === 'auth/login/fulfilled') {
+          navigate('/'); 
+        }
+      });
     } else {
       dispatch(signup(values)).then((result) => {
-        if (result.error) {
-            console.error('Signup Error:', result.error.message);
-        } else {
-            console.log('Signup Success:', result.payload);
+        if (result.type === 'auth/signup/fulfilled') {
+          navigate('/'); 
         }
-    });
+      });
     }
     setSubmitting(false);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900">
-      <div className="bg-black bg-opacity-50 p-8 rounded-lg shadow-md w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="bg-black bg-opacity-50 p-8 rounded-lg shadow-xl w-full max-w-md">
         <h2 className="text-3xl font-bold text-white text-center mb-6">
           {isLogin ? 'Login' : 'Sign Up'}
         </h2>
@@ -127,7 +130,11 @@ const AuthForm = () => {
                 {isLogin ? 'Login' : 'Sign Up'}
               </button>
               {status === 'loading' && <div className="text-white text-center mt-4">Loading...</div>}
-              {error && <div className="text-red-500 text-center mt-4">{error}</div>}
+              {error && (
+                <div className="text-red-500 text-center mt-4">
+                  {typeof error === 'string' ? error : error?.message || 'An error occurred'}
+                </div>
+              )}
             </Form>
           )}
         </Formik>

@@ -1,86 +1,83 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from 'axios'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import API from './api'; 
+
+const initialState = {
+  user: null,
+  token: localStorage.getItem('token') || null,
+  status: 'idle',
+  error: null,
+};
 
 
-//signup
-export const signup = createAsyncThunk('auth/signup', async (userDetails, rejectWithValue) => {
+export const signup = createAsyncThunk(
+  'auth/signup',
+  async (formData, { rejectWithValue }) => {
     try {
-        const reponse = await axios.post('http://localhost:5001/api/user/register', userDetails)
-        return reponse.data;
-        
-
+      const response = await API.post('/api/user/register', formData);
+      return response.data;
     } catch (error) {
-        if (error.reponse && error.reponse.data) {
-            console.log(error.reponse.data)
-            return rejectWithValue(error.reponse.data.message)
-        }
-        console.log(error);
-        return rejectWithValue(error.message)
+      return rejectWithValue(error.response.data);
     }
-})
+  }
+);
 
-//login
-
-export const login = createAsyncThunk('auth/login', async (userDetails, rejectWithValue) => {
+export const login = createAsyncThunk(
+  'auth/login',
+  async (formData, { rejectWithValue }) => {
     try {
-        const reponse = await axios.post('/api/signup', userDetails)
-        return reponse.data;
-
+      const response = await API.post('/api/user/login', formData); 
+      return response.data;
     } catch (error) {
-        if (error.response && error.response.data) {
-            return rejectWithValue(error.response.data.msg);
-        }
-        return rejectWithValue(error.message)
+      return rejectWithValue(error.response.data);
     }
-})
+  }
+);
 
-
-//slice
 const authSlice = createSlice({
-    name :'auth',
-    initialState :{
-        user : null,
-        token:null,
-        status: 'idle',
-        error:null
-    
+  name: 'auth',
+  initialState,
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+      localStorage.removeItem('token');
+      delete API.defaults.headers.common['Authorization'];
     },
-    reducers: {
-        logout : (state) => {
-            state.user = null;
-            state.token=null;
-            state.status = null;
-            state.error=null;
-        }
-    },
-
-    extraReducers: (builder) => {
-        builder
-          .addCase(signup.pending, (state) => {
-            state.status = 'loading'; 
-          })
-          .addCase(signup.fulfilled, (state, action) => {
-            state.status = 'succeeded'; 
-            state.user = action.payload; 
-          })
-          .addCase(signup.rejected, (state, action) => {
-            state.status = 'failed'; 
-            state.error = action.payload; 
-          })
-          .addCase(login.pending, (state) => {
-            state.status = 'loading'; 
-          })
-          .addCase(login.fulfilled, (state, action) => {
-            state.status = 'succeeded'; 
-            state.user = action.payload; 
-          })
-          .addCase(login.rejected, (state, action) => {
-            state.status = 'failed'; 
-            state.error = action.payload; 
-          });
-      },
-})
-
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(signup.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(signup.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.user = action.payload.result;
+        state.token = action.payload.token;
+        localStorage.setItem('token', action.payload.token);
+        
+        API.defaults.headers.common['Authorization'] = `Bearer ${action.payload.token};`
+      })
+      .addCase(signup.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = typeof action.payload === 'string' ? action.payload : action.payload?.message || 'Signup failed';
+      })
+      .addCase(login.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.user = action.payload.result;
+        state.token = action.payload.token;
+        localStorage.setItem('token', action.payload.token);
+        
+        API.defaults.headers.common['Authorization'] = `Bearer ${action.payload.token}`;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = typeof action.payload === 'string' ? action.payload : action.payload?.message || 'Login failed';
+      })
+  },
+});
 
 export const { logout } = authSlice.actions;
 
