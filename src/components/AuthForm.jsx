@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signup, login } from '../features/auth/authSlice';
 
+
+
+
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const dispatch = useDispatch();
@@ -36,22 +39,29 @@ const AuthForm = () => {
     confirmPassword: '',
   };
 
-  const handleSubmit = (values, { setSubmitting }) => {
+  const handleSubmit = (values) => {
     if (isLogin) {
       dispatch(login(values)).then((result) => {
         if (result.type === 'auth/login/fulfilled') {
+          
           navigate('/'); 
+          
         }
       });
     } else {
       dispatch(signup(values)).then((result) => {
         if (result.type === 'auth/signup/fulfilled') {
+         
           navigate('/'); 
+          
         }
       });
     }
-    setSubmitting(false);
+   
   };
+
+
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center">
