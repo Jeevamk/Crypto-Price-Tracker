@@ -35,10 +35,17 @@ const AuthForm = () => {
   };
 
   const handleSubmit = (values, { setSubmitting }) => {
+    console.log('Form Values:', values);
     if (isLogin) {
       dispatch(login(values));
     } else {
-      dispatch(signup(values));
+      dispatch(signup(values)).then((result) => {
+        if (result.error) {
+            console.error('Signup Error:', result.error.message);
+        } else {
+            console.log('Signup Success:', result.payload);
+        }
+    });
     }
     setSubmitting(false);
   };
