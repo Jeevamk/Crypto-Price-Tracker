@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import AuthForm from './components/AuthForm';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import NotProtectedRoute from './components/NotProtectedRoute.jsx';
+import CoinGraph from './components/coinGraph/CoinGraph.jsx'
 import './App.css'
 
 export default function App() {
@@ -29,6 +30,14 @@ export default function App() {
             }
              />
           <Route path="/signup" element={<AuthForm />} />
+          <Route
+            path="/:symbol"
+            element={
+              <ProtectedRoute>
+                <CoinGraph />
+              </ProtectedRoute>
+            }
+          /> 
         </Route>
       </Routes>
     </Router>

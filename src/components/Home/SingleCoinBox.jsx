@@ -1,6 +1,12 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function SingleCoinBox({coin}) {
+  const navigate = useNavigate()
+
+  const handleExploreClick = () => {
+    navigate(`/${coin.symbol}`);
+  };
   return (
     <>
     <div className="flex items-center text-white">
@@ -19,7 +25,7 @@ function SingleCoinBox({coin}) {
     <div className='text-white m-4 font-bold'>
         Usdt : <span className='text-green-400 m-4 font-bold'>{coin.usdtPrice}</span>
     </div>
-    <div className="border flex justify-center border-blue-400 text-white p-3 rounded-3xl"><span>Explore</span></div>
+    <div className="border flex justify-center border-blue-400 text-white p-3 rounded-3xl cursor-pointer" onClick={handleExploreClick} ><span >Explore</span></div>
     </>
     
   )
