@@ -31,7 +31,6 @@ function Coinbox() {
 
   useEffect(() => {
     if (selectedSymbol) {
-      // Fetch and display data for the selected symbol
       console.log('Selected Symbol:', selectedSymbol);
     }
   }, [selectedSymbol]);

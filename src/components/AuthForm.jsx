@@ -40,31 +40,13 @@ const AuthForm = () => {
     confirmPassword: '',
   };
 
-  // const handleSubmit = (values) => {
-  //   if (isLogin) {
-  //     dispatch(login(values)).then((result) => {
-  //       if (result.type === 'auth/login/fulfilled') {
-          
-  //         navigate('/'); 
-          
-  //       }
-  //     });
-  //   } else {
-  //     dispatch(signup(values)).then((result) => {
-  //       if (result.type === 'auth/signup/fulfilled') {
-         
-  //         navigate('/'); 
-          
-  //       }
-  //     });
-  //   }
-  // };
+
 
   const handleSubmit = (values) => {
     const action = isLogin ? login(values) : signup(values);
     dispatch(action).then((result) => {
       if (result.type === `auth/${isLogin ? 'login' : 'signup'}/fulfilled`) {
-        // Save the token in localStorage
+       
         localStorage.setItem('token', result.payload.token);
         API.defaults.headers.common['Authorization'] = `Bearer ${result.payload.token}`;
         navigate('/');
