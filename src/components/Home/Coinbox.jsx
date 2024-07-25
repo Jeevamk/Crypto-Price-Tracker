@@ -3,6 +3,7 @@ import SearchBox from './SearchBox';
 import CoinCard from './CoinCard';
 import Pagination from './Pagination';
 import Shimmer from './Shimmer';
+import NotFound from './NotFound';
 
 const ITEMS_PER_PAGE = 15;
 
@@ -45,17 +46,17 @@ function Coinbox() {
 
   return (
     <div>
-      <SearchBox onSearch={(symbol) => setSelectedSymbol(symbol)} coinsWithImagesAndPrices={coinsWithImagesAndPrices} setCoinsWithImagesAndPrices={setCoinsWithImagesAndPrices}/>
+      <SearchBox coinsWithImagesAndPrices={coinsWithImagesAndPrices} setCoinsWithImagesAndPrices={setCoinsWithImagesAndPrices}/>
       <div className='flex flex-wrap justify-center gap-3 mt-9'>
         {isLoading
           ? Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
               <Shimmer key={index} />
             ))
-          : currentItems.map(coin => (
+          : currentItems.length == 0 ? <NotFound /> :currentItems.map(coin => (
               <CoinCard key={coin.symbol} coin={coin} />
             ))}
       </div>
-      {!isLoading && (
+      {!isLoading && coinsWithImagesAndPrices.length > ITEMS_PER_PAGE && (
         <Pagination
           pageCount={Math.ceil(coinsWithImagesAndPrices.length / ITEMS_PER_PAGE)}
           onPageChange={handlePageClick}
