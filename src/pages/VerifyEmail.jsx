@@ -11,12 +11,17 @@ const VerifyEmail = () => {
     const verifyEmail = async () => {
       try {
         const response = await API.get(`/api/user/verify/${token}`);
-        console.log(response);
-        setMessage('Email verified successfully! Redirecting to login...');
-        setTimeout(() => {
-          navigate('/login'); // Redirect to login page after successful verification
-        }, 2000);
+        console.log(response); 
+        if (response.status === 200) {
+          setMessage('Email verified successfully! Redirecting to login...');
+          setTimeout(() => {
+            navigate('/login');
+          }, 2000);
+        } else {
+          setMessage('Verification failed. Please try again.');
+        }
       } catch (error) {
+        console.error('Verification error:', error); 
         setMessage('Verification failed. Please try again.');
       }
     };

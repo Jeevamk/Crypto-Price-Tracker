@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CoinCard from './CoinCard';
 import Pagination from './Pagination';
 import Shimmer from './Shimmer';
+import SerachBox from '../Home/SearchBox'
 
 const ITEMS_PER_PAGE = 15;
 
@@ -35,7 +36,9 @@ function Coinbox() {
   const currentItems = coinsWithImagesAndPrices.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
+   
     <div >
+       <SerachBox />
       <div className='flex flex-wrap justify-center gap-3 mt-9'>
         {isLoading
           ? Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (

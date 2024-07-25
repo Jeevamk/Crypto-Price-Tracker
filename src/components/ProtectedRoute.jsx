@@ -5,7 +5,16 @@ import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
   const { token } = useSelector((state) => state.auth);
-  return token ? children : <Navigate to="/login" />;
+ console.log(token);
+  if(token==undefined) {
+   return <Navigate to='/login' />
+  }else{
+    return token ? children : <Navigate to="/login" />;
+  }
+ 
+ 
 };
+
+
 
 export default ProtectedRoute;
