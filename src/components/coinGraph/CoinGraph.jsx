@@ -184,7 +184,7 @@ const CoinGraph = () => {
           <div className="coin-details flex flex-col items-center mt-6 shadow-lg">
             <img src={coinInfo.image} alt={coinInfo.name} className="coin-image w-24 h-24 rounded-full mb-2" />
             <h2 className="coin-name text-2xl font-bold text-gray-400">{coinInfo.name}</h2>
-            <p className="coin-symbol text-lg text-gray-500">{coinInfo.symbol.toUpperCase()}</p>
+            <p className="coin-symbol text-lg text-gray-500">{coinInfo.symbol}</p>
           </div>
         )}
       </div>
