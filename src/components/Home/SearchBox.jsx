@@ -22,7 +22,7 @@ const SearchBox = ({ onSearch, coinsWithImagesAndPrices, setCoinsWithImagesAndPr
       fetchResults(query);
     } else {
       setResults([]);
-      setCoinsWithImagesAndPrices(initialData); // Reset to initial data when query is cleared
+      setCoinsWithImagesAndPrices(initialData); 
     }
   }, [query, initialData, setCoinsWithImagesAndPrices]);
 
