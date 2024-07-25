@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signup, login } from '../features/auth/authSlice';
+import API from '../features/auth/api';
 
 
 
@@ -39,28 +40,41 @@ const AuthForm = () => {
     confirmPassword: '',
   };
 
-  const handleSubmit = (values) => {
-    if (isLogin) {
-      dispatch(login(values)).then((result) => {
-        if (result.type === 'auth/login/fulfilled') {
+  // const handleSubmit = (values) => {
+  //   if (isLogin) {
+  //     dispatch(login(values)).then((result) => {
+  //       if (result.type === 'auth/login/fulfilled') {
           
-          navigate('/'); 
+  //         navigate('/'); 
           
-        }
-      });
-    } else {
-      dispatch(signup(values)).then((result) => {
-        if (result.type === 'auth/signup/fulfilled') {
+  //       }
+  //     });
+  //   } else {
+  //     dispatch(signup(values)).then((result) => {
+  //       if (result.type === 'auth/signup/fulfilled') {
          
-          navigate('/'); 
+  //         navigate('/'); 
           
-        }
-      });
-    }
-   
+  //       }
+  //     });
+  //   }
+  // };
+
+  const handleSubmit = (values) => {
+    const action = isLogin ? login(values) : signup(values);
+    dispatch(action).then((result) => {
+      if (result.type === `auth/${isLogin ? 'login' : 'signup'}/fulfilled`) {
+        // Save the token in localStorage
+        localStorage.setItem('token', result.payload.token);
+        API.defaults.headers.common['Authorization'] = `Bearer ${result.payload.token}`;
+        navigate('/');
+      } else {
+        console.error('Error:', result.payload);
+      }
+    }).catch((error) => {
+      console.error('Dispatch error:', error);
+    });
   };
-
-
   
 
   return (

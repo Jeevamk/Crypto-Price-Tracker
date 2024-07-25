@@ -31,7 +31,7 @@ export default function App() {
             }
              />
           <Route path="/verify/:token" element={<VerifyEmail />} />
-          <Route path="/signup" element={<AuthForm />} />
+          <Route path="/signup" element={<AuthForm/>} />
           <Route
             path="/:symbol"
             element={

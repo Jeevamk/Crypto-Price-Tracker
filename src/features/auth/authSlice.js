@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import API from './api'; 
 
 const initialState = {
-  user: JSON.parse(localStorage.getItem('user')) || null, //user
+  user: JSON.parse(localStorage.getItem('user')) || null, 
   token: localStorage.getItem('token') || null,
   status: 'idle',
   error: null,
