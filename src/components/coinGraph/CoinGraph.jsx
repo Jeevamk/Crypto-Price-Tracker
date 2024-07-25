@@ -118,11 +118,11 @@ import {
   TimeScale,
   registerables
 } from 'chart.js';
-import 'chartjs-adapter-date-fns'; // Import the date adapter
+import 'chartjs-adapter-date-fns'; 
 import API from '../../features/auth/api';
 
 
-// Register Chart.js components
+
 ChartJS.register(
   Title,
   Tooltip,
@@ -145,8 +145,9 @@ const CoinGraph = () => {
         const response = await API.get(`/api/prices/${symbol}`);
         const { coinGeckoInfo, recentPrices } = response.data;
 
-        // Prepare data for the chart
+        
         const labels = recentPrices.map(entry => new Date(entry.timestamp));
+        console.log(labels);
         const prices = recentPrices.map(entry => entry.price.usdt);
 
         setChartData({
@@ -170,7 +171,7 @@ const CoinGraph = () => {
 
     fetchPriceData();
 
-    // Refresh data every minute
+    
     const intervalId = setInterval(fetchPriceData, 60000);
 
     return () => clearInterval(intervalId);
@@ -180,9 +181,9 @@ const CoinGraph = () => {
     <div className="chart-container w-full">
       <div className="coin-info text-center mb-5">
         {coinInfo && (
-          <div className="coin-details flex flex-col items-center">
+          <div className="coin-details flex flex-col items-center mt-6 shadow-lg">
             <img src={coinInfo.image} alt={coinInfo.name} className="coin-image w-24 h-24 rounded-full mb-2" />
-            <h2 className="coin-name text-2xl font-bold">{coinInfo.name}</h2>
+            <h2 className="coin-name text-2xl font-bold text-gray-400">{coinInfo.name}</h2>
             <p className="coin-symbol text-lg text-gray-500">{coinInfo.symbol.toUpperCase()}</p>
           </div>
         )}
