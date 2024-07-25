@@ -125,3 +125,4 @@ const SearchBox = ({ coinsWithImagesAndPrices = [], setCoinsWithImagesAndPrices 
 };
 
 export default SearchBox;
+

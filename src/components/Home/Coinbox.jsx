@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SearchBox from './SearchBox';
+import SearchBox from './Search/SearchBox';
 import CoinCard from './CoinCard';
 import Pagination from './Pagination';
 import Shimmer from './Shimmer';

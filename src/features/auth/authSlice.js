@@ -1,13 +1,13 @@
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import API from './api'; 
 
 const initialState = {
-  user: JSON.parse(localStorage.getItem('user')) || null, 
+  user: JSON.parse(localStorage.getItem('user')) || null,
   token: localStorage.getItem('token') || null,
   status: 'idle',
   error: null,
 };
-
 
 export const signup = createAsyncThunk(
   'auth/signup',
@@ -25,7 +25,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async (formData, { rejectWithValue }) => {
     try {
-      const response = await API.post('/api/user/login', formData); 
+      const response = await API.post('/api/user/login', formData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -40,6 +40,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.token = null;
+      localStorage.removeItem('user');
       localStorage.removeItem('token');
       delete API.defaults.headers.common['Authorization'];
     },
@@ -53,9 +54,9 @@ const authSlice = createSlice({
         state.status = 'succeeded';
         state.user = action.payload.result;
         state.token = action.payload.token;
+        localStorage.setItem('user', JSON.stringify(action.payload.result));
         localStorage.setItem('token', action.payload.token);
-        
-        API.defaults.headers.common['Authorization'] = `Bearer ${action.payload.token};`
+        API.defaults.headers.common['Authorization'] = `Bearer ${action.payload.token}`;
       })
       .addCase(signup.rejected, (state, action) => {
         state.status = 'failed';
@@ -68,14 +69,14 @@ const authSlice = createSlice({
         state.status = 'succeeded';
         state.user = action.payload.result;
         state.token = action.payload.token;
+        localStorage.setItem('user', JSON.stringify(action.payload.result));
         localStorage.setItem('token', action.payload.token);
-        
         API.defaults.headers.common['Authorization'] = `Bearer ${action.payload.token}`;
       })
       .addCase(login.rejected, (state, action) => {
         state.status = 'failed';
         state.error = typeof action.payload === 'string' ? action.payload : action.payload?.message || 'Login failed';
-      })
+      });
   },
 });
 
