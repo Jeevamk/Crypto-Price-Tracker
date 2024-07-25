@@ -12,6 +12,8 @@ function Coinbox() {
   const [currentPage, setCurrentPage] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
+
+
   useEffect(() => {
     const fetchCryptoData = async () => {
       try {
