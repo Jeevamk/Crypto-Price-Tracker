@@ -92,6 +92,7 @@ const SearchBox = ({ coinsWithImagesAndPrices = [], setCoinsWithImagesAndPrices 
     try {
       await fetch(`http://localhost:5001/api/searchHistory/${user._id}/${term}`, { method: 'DELETE' });
       setHistory(history.filter(search => search !== term));
+      setQuery("");
     } catch (error) {
       console.error('Error removing search term:', error);
     }
