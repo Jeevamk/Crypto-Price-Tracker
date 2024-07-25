@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BiSolidUserCircle } from "react-icons/bi";
 import { logout } from '../../../features/auth/authSlice';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -20,9 +21,12 @@ const Navbar = () => {
         <div className="relative flex items-center justify-between h-16">
           <div className="flex-1 flex items-center justify-between">
             <div className="flex-shrink-0 text-white">
+              <Link to='/'>
               <h1 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-semibold sm:font-bold">
                 CryptoTracker.
               </h1>
+              </Link>
+              
             </div>
             <div className="ml-3 relative">
               <button

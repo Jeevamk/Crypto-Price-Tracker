@@ -7,6 +7,7 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 import NotProtectedRoute from './components/NotProtectedRoute.jsx';
 import CoinGraph from './components/coinGraph/CoinGraph.jsx'
 import './App.css'
+import VerifyEmail from './pages/VerifyEmail.jsx';
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
               </NotProtectedRoute>
             }
              />
+          <Route path="/verify/:token" element={<VerifyEmail />} />
           <Route path="/signup" element={<AuthForm />} />
           <Route
             path="/:symbol"

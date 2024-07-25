@@ -7,6 +7,8 @@ function SingleCoinBox({coin}) {
   const handleExploreClick = () => {
     navigate(`/${coin.symbol}`);
   };
+
+  
   return (
     <>
     <div className="flex items-center text-white">
