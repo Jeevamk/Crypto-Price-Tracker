@@ -8,6 +8,7 @@ import NotProtectedRoute from './components/NotProtectedRoute.jsx';
 import CoinGraph from './components/coinGraph/CoinGraph.jsx'
 import './App.css'
 import VerifyEmail from './pages/VerifyEmail.jsx';
+import SearchHistoryPage from './pages/SearchHistoryPage.jsx'; 
 
 export default function App() {
   return (
@@ -39,7 +40,15 @@ export default function App() {
                 <CoinGraph />
               </ProtectedRoute>
             }
-          /> 
+          />
+          <Route 
+            path="/search-history" 
+            element={
+              <ProtectedRoute>
+                <SearchHistoryPage /> 
+              </ProtectedRoute>
+            } 
+          />
         </Route>
       </Routes>
     </Router>

@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user); 
+  const user = useSelector((state) => state.auth.user);
   console.log(user);
 
   const handleLogout = () => {
-    dispatch(logout()); 
-    setShowMenu(false); 
+    dispatch(logout());
+    setShowMenu(false);
   };
 
   return (
@@ -22,11 +22,10 @@ const Navbar = () => {
           <div className="flex-1 flex items-center justify-between">
             <div className="flex-shrink-0 text-white">
               <Link to='/'>
-              <h1 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-semibold sm:font-bold">
-                CryptoTracker.
-              </h1>
+                <h1 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-semibold sm:font-bold">
+                  CryptoTracker.
+                </h1>
               </Link>
-              
             </div>
             <div className="ml-3 relative">
               <button
@@ -54,6 +53,9 @@ const Navbar = () => {
                         tabIndex="-1"
                       >
                         {user.username}
+                      </div>
+                      <div className='block px-4 py-2 text-sm text-white'>
+                        <Link to="/search-history">Search History</Link>
                       </div>
                       <div
                         className="block px-4 py-2 text-sm text-gray-600 cursor-pointer hover:text-white"

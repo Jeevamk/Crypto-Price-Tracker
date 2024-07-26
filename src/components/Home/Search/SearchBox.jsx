@@ -22,7 +22,7 @@ const SearchBox = ({ coinsWithImagesAndPrices = [], setCoinsWithImagesAndPrices 
 
   // Fetch results when query changes
   useEffect(() => {
-    if (query.length > 1) {
+    if (query.length >= 1) {
       fetchResults();
     } else {
       setResults([]);
@@ -35,7 +35,8 @@ const SearchBox = ({ coinsWithImagesAndPrices = [], setCoinsWithImagesAndPrices 
     try {
       const response = await fetch(`http://localhost:5001/api/searchHistory/${user._id}`);
       const data = await response.json();
-      setResults(data.searches);
+      const regex = new RegExp(query, 'i');
+      setResults(data.searches.filter(term => regex.test(term)));
       setHistory(data.searches);
     } catch (error) {
       console.error('Error fetching search results:', error);
@@ -81,11 +82,14 @@ const SearchBox = ({ coinsWithImagesAndPrices = [], setCoinsWithImagesAndPrices 
     }
   };
 
+
+
   // Handle selecting a result
   const handleSelect = (result) => {
     setQuery(result);
     setResults([]);
   };
+
 
   // Handle removing search history
   const handleRemoveHistory = async (term) => {
@@ -103,7 +107,7 @@ const SearchBox = ({ coinsWithImagesAndPrices = [], setCoinsWithImagesAndPrices 
       <input 
         type="text" 
         value={query}
-        onChange={handleChange}
+        onChange={handleChange} autoComplete='true' 
         placeholder="Search for a cryptocurrency"
         className="w-full p-3 bg-gray-800 border border-gray-600 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
       />
